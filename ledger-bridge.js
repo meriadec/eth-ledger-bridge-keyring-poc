@@ -3,7 +3,7 @@ import 'babel-polyfill'
 
 require('buffer')
 
-import TransportU2F from '@ledgerhq/hw-transport-u2f'
+import TransportWebUSB from '@ledgerhq/hw-transport-webusb'
 import LedgerEth from '@ledgerhq/hw-app-eth'
 import { byContractAddress } from '@ledgerhq/hw-app-eth/erc20'
 
@@ -38,7 +38,8 @@ export default class LedgerBridge {
 
     async makeApp () {
         try {
-            this.transport = await TransportU2F.create()
+            this.transport = await TransportWebUSB.create()
+          console.log(`just created webusb bridge`)
             this.app = new LedgerEth(this.transport)
         } catch (e) {
             console.log('LEDGER:::CREATE APP ERROR', e)
